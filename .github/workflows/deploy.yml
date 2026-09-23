@@ -22,9 +22,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.IAM_ROLE }}
           aws-region: ${{ secrets.AWS_REGION }}
-          # audience: ${{ secrets.AUDIENCE }}
-          # role-duration-seconds: 7200
-          mask-aws-account-id: true
+          role-duration-seconds: 7200
 
       - name: Install zip tool
         uses: montudor/action-zip@v1
