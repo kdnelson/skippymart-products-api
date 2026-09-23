@@ -1,4 +1,4 @@
-name: Deploy Lambda Function
+name: deploy skippymart-products-api
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.IAM_ROLE }}
           aws-region: ${{ secrets.AWS_REGION }}
-          audience: ${{ secrets.AUDIENCE }}
+          # audience: ${{ secrets.AUDIENCE }}
           role-duration-seconds: 7200
 
       - name: Install zip tool
