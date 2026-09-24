@@ -35,7 +35,7 @@ jobs:
           REGION="${{ secrets.AWS_REGION }}"
           ZIP_FILE="fileb://code.zip"
           RUNTIME="nodejs20.x"
-          HANDLER="index.handler"
+          HANDLER=src/index.handler"
 
           echo "Checking if Lambda function exists..."
           if aws lambda get-function --function-name "$FUNCTION_NAME" --region "$REGION" >/dev/null 2>&1; then
