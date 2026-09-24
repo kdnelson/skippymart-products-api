@@ -36,8 +36,8 @@ jobs:
           REGION="${{ secrets.AWS_REGION }}"
           ROLE_ARN="${{ secrets.IAM_ROLE }}"
           ZIP_FILE="fileb://code.zip"
-          RUNTIME="nodejs20.x" # <-- CHANGE THIS to your runtime (e.g., python3.11, go1.x)
-          HANDLER="index.handler" # <-- CHANGE THIS to your handler file and function name
+          RUNTIME="nodejs20.x"
+          HANDLER="index.handler"
 
           echo "Checking if Lambda function exists..."
           if aws lambda get-function --function-name "$FUNCTION_NAME" --region "$REGION" >/dev/null 2>&1; then
