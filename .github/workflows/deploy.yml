@@ -26,8 +26,7 @@ jobs:
 
       - name: Create Zip file for Lambda function
         run: |
-          cd src
-          zip -r ../code.zip index.js package.json
+          zip -r code.zip package.json src/index.js
 
       - name: Create or Update AWS Lambda
         run: |
