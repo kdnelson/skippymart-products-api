@@ -30,9 +30,29 @@ jobs:
       - name: Create Zip file for Lambda function
         run: zip -r code.zip .
 
-      - name: Deploy to AWS Lambda
+      - name: Create or Update AWS Lambda
         run: |
-          aws lambda update-function-code \
-            --function-name skippymart-products-api \
-            --zip-file fileb://code.zip \
-            --region ${{ secrets.AWS_REGION }}
+          FUNCTION_NAME="skippymart-products-api"
+          REGION="${{ secrets.AWS_REGION }}"
+          ROLE_ARN="${{ secrets.IAM_ROLE }}"
+          ZIP_FILE="fileb://code.zip"
+          RUNTIME="nodejs20.x" # <-- CHANGE THIS to your runtime (e.g., python3.11, go1.x)
+          HANDLER="index.handler" # <-- CHANGE THIS to your handler file and function name
+
+          echo "Checking if Lambda function exists..."
+          if aws lambda get-function --function-name "$FUNCTION_NAME" --region "$REGION" >/dev/null 2>&1; then
+            echo "Function exists. Updating code..."
+            aws lambda update-function-code \
+              --function-name "$FUNCTION_NAME" \
+              --zip-file "$ZIP_FILE" \
+              --region "$REGION"
+          else
+            echo "Function does not exist. Creating new function..."
+            aws lambda create-function \
+              --function-name "$FUNCTION_NAME" \
+              --runtime "$RUNTIME" \
+              --role "$ROLE_ARN" \
+              --handler "$HANDLER" \
+              --zip-file "$ZIP_FILE" \
+              --region "$REGION"
+          fi
