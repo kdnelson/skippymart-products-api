@@ -24,11 +24,8 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           role-duration-seconds: 7200
 
-      - name: Install zip tool
-        uses: montudor/action-zip@v1
-
       - name: Create Zip file for Lambda function
-        run: zip -r code.zip .
+        run: zip -r code.zip index.js package.json
 
       - name: Create or Update AWS Lambda
         run: |
