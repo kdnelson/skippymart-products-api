@@ -20,7 +20,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.IAM_ROLE }}
+          role-to-assume: ${{ secrets.IAM_APP_ROLE }}
           aws-region: ${{ secrets.AWS_REGION }}
           role-duration-seconds: 7200
 
@@ -33,8 +33,8 @@ jobs:
       - name: Create or Update AWS Lambda
         run: |
           FUNCTION_NAME="skippymart-products-api"
+          ROLE_ARN="${{ secrets.IAM_LAMBDA_ROLE }}"
           REGION="${{ secrets.AWS_REGION }}"
-          ROLE_ARN="${{ secrets.IAM_ROLE }}"
           ZIP_FILE="fileb://code.zip"
           RUNTIME="nodejs20.x"
           HANDLER="index.handler"
