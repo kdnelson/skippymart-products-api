@@ -30,12 +30,9 @@ jobs:
       - name: Create Zip file for Lambda function
         run: zip -r code.zip .
 
-      - name: AWS CLI v2
-        uses: imehedi/actions-awscli-v2@latest
-        env:
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-        with:
-          args: >
-            lambda update-function-code
-            --function-name arn:aws:lambda:us-west-2:824333227939:function:skippymart-products-api
-            --zip-file fileb://code.zip
+      - name: Deploy to AWS Lambda
+        run: |
+          aws lambda update-function-code \
+            --function-name skippymart-products-api \
+            --zip-file fileb://code.zip \
+            --region ${{ secrets.AWS_REGION }}
